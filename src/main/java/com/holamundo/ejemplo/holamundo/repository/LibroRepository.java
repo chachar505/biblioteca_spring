@@ -10,6 +10,7 @@ import java.util.List;
 public class LibroRepository{
 
     private List<Libro> listaLibros = new ArrayList<>();
+    public List<Libro> otenerLibros(){ return listaLibros;}
 
     public List<Libro> obtenerTodos() {
         return listaLibros;
