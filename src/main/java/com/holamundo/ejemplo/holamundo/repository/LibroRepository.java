@@ -1,5 +1,4 @@
 package com.holamundo.ejemplo.holamundo.repository;
-
 import com.holamundo.ejemplo.holamundo.model.Libro;
 import org.springframework.stereotype.Repository;
 
@@ -7,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class LibroRepository{
+public class LibroRepository {
 
     private List<Libro> listaLibros = new ArrayList<>();
-    public List<Libro> otenerLibros(){ return listaLibros;}
 
+    // Retorna la lista completa
     public List<Libro> obtenerTodos() {
         return listaLibros;
     }
@@ -47,5 +46,9 @@ public class LibroRepository{
             }
         }
         return null;
+    }
+
+    public void eliminar(int id) {
+        listaLibros.removeIf(l -> l.getId() == id);
     }
 }

@@ -8,29 +8,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class libroService {
+public abstract class libroService {
 
     @Autowired
+    private LibroRepository libroRepository; // Minúscula para la instancia
 
-    private LibroRepository LibroRepository;
-
-    public List<libroService> getLibros(){
-        return LibroRepository.obtenerLibros();
-
+    public List<Libro> getLibros() {
+        return libroRepository.obtenerTodos();
     }
 
-    public LibroRepository saveLIbro(LibroRepository libro){
-        return LibroRepository.guardar(libro);
-    }
-
-    public Libro updateLibro(Libro libro){
-        return LibroRepository.actualizar(libro);
+    public Libro saveLibro(Libro libro) { // Recibe un Libro, no un Repository
+        return libroRepository.guardar(libro);
     }
 
     public Libro getLibroId(int id){
-        return LibroRepository.actualizar(Libro);
+        return libroRepository.buscarPorId(id);
     }
-
-
+    public abstract Libro updateLibro();
 
 }

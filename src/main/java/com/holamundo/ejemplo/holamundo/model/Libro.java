@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 
 public class Libro {
-    private int id, fechaPublicacion;;
-    private String isbn,titulo,editorial,autor;
+    private int id, fechaPublicacion;
+
+    private String isbn, titulo, editorial, autor;
 }
