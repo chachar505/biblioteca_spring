@@ -8,8 +8,23 @@ import java.util.List;
 
 @Repository
 public class LibroRepository {
+
+
     private List<Libro> listaLibro = new ArrayList<>();
 
+
+    public LibroRepository(){
+        listaLibro.add(new Libro(1,  2018, "9789569646638", "Fuego y Sangre",                                    "Penguin Random House Grupo Editorial", "George R. R. Martin"));
+        listaLibro.add(new Libro(2,  2014, "9789563494150", "Quique Hache: El Mall Embrujado y Otras Historias", "Sm Ediciones",                        "Sergio Gomez"));
+        listaLibro.add(new Libro(3,  2020, "9781484256251", "Spring Boot Persistence Best Practices",            "Apress",                              "Anghel Leonard"));
+        listaLibro.add(new Libro(4,  2024, "9789566075752", "Harry Potter y la piedra filosofal",                "Salamandra",                          "J. K. Rowling"));
+        listaLibro.add(new Libro(5,  1999, "9780439139601", "Harry Potter y el prisionero Azkaban",              "Scholastic",                          "J. K. Rowling"));
+        listaLibro.add(new Libro(6,  2000, "9780439136365", "Harry Potter y el cáliz de fuego",                 "Scholastic",                          "J. K. Rowling"));
+        listaLibro.add(new Libro(7,  2008, "9780321127426", "Effective Java",                                    "Addison-Wesley",                      "Joshua Bloch"));
+        listaLibro.add(new Libro(8,  2017, "9780134685991", "Clean Architecture",                               "Prentice Hall",                       "Robert C. Martin"));
+        listaLibro.add(new Libro(9,  1994, "9780201633610", "Design Patterns",                                   "Addison-Wesley",                      "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides"));
+        listaLibro.add(new Libro(10, 2008, "9780132350884", "Clean Code",                                        "Prentice Hall",                       "Robert C. Martin"));
+    }
     public List<Libro> obtenerLibro(){
         return listaLibro;
     }

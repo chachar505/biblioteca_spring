@@ -14,3 +14,4 @@ public class Libro {
 
     private String isbn, titulo, editorial, autor;
 }
+//http://localhost:8081/api/v1/libros postman url dont forget
