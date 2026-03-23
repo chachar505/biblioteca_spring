@@ -5,50 +5,64 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Repository
 public class LibroRepository {
+    private List<Libro> listaLibro = new ArrayList<>();
 
-    private List<Libro> listaLibros = new ArrayList<>();
-
-    // Retorna la lista completa
-    public List<Libro> obtenerTodos() {
-        return listaLibros;
+    public List<Libro> obtenerLibro(){
+        return listaLibro;
     }
 
-    public Libro buscarPorId(int id) {
-        for (Libro libro : listaLibros) {
-            if (libro.getId() == id) {
+    public Libro buscarPorId(int id){
+        for (Libro libro : listaLibro){
+            if (libro.getId() == id){
                 return libro;
             }
         }
         return null;
     }
 
-    public Libro buscarPorIsbn(String isbn) {
-        for (Libro libro : listaLibros) {
-            if (libro.getIsbn().equals(isbn)) {
+    public Libro buscarPorIsbn(String isbn){
+        for (Libro libro: listaLibro){
+            if (libro.getIsbn().equals(isbn)){
                 return libro;
             }
         }
         return null;
     }
+    public Libro guardar(Libro libro){
+        int id=0, idPosicion=0;
 
-    public Libro guardar(Libro libro) {
-        listaLibros.add(libro);
+        listaLibro.add(libro);
         return libro;
+
     }
 
-    public Libro actualizar(Libro libroActualizado) {
-        for (int i = 0; i < listaLibros.size(); i++) {
-            if (listaLibros.get(i).getId() == libroActualizado.getId()) {
-                listaLibros.set(i, libroActualizado);
-                return libroActualizado;
+    public Libro actualizar(Libro libro){
+        int id=0, idPosicion=0;
+
+        for (int i=0; i <  listaLibro.size(); i++) {
+            if ((listaLibro.get(i).getId()) == libro.getId()){
+                id = libro.getId();
+                idPosicion = i;
+
             }
         }
-        return null;
+
+        Libro libro1 = new Libro();
+        libro1.setId(id);
+        libro1.setTitulo(libro.getTitulo());
+        libro1.setAutor(libro.getAutor());
+        libro1.setFechaPublicacion(libro.getFechaPublicacion());
+
+        return libro1;
     }
 
-    public void eliminar(int id) {
-        listaLibros.removeIf(l -> l.getId() == id);
+    public void eliminar( int id) {
+        Libro libro = buscarPorId(id);
+        if (libro != null) {
+            listaLibro.remove(libro);
+        }
     }
 }

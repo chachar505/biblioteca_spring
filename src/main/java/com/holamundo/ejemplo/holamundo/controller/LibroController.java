@@ -2,7 +2,7 @@ package com.holamundo.ejemplo.holamundo.controller;
 
 import com.holamundo.ejemplo.holamundo.model.Libro;
 import com.holamundo.ejemplo.holamundo.repository.LibroRepository;
-import com.holamundo.ejemplo.holamundo.service.libroService;
+import com.holamundo.ejemplo.holamundo.service.LibroService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,30 +15,32 @@ import java.util.List;
 @RequestMapping("")
 
 public class LibroController {
-
     @Autowired
-    private libroService libroService;
-    @Autowired
-    private LibroRepository libroRepository;
+    private LibroService libroServicio;  // ← tipo con mayúscula, variable distinta
 
     @GetMapping
-    public List<Libro> listarLibro(){
-        return libroService.getLibros();
+    public List<Libro> listarLibro() {
+        return libroServicio.getLibros();  // ← usa el nuevo nombre
     }
 
     @PostMapping
-    public Libro agregarLibro(@RequestBody Libro libro){
-        return libroService.saveLibro(libro);
+    public Libro agregarLibro(@RequestBody Libro libro) {
+        return libroServicio.saveLibro(libro);
     }
 
     @GetMapping("{id}")
-    public Libro buscarLibro(@RequestBody Libro libro){
-        return libroService.updateLibro();
+    public Libro buscarLibro(@PathVariable int id) {
+        return libroServicio.getLibroId(id);
     }
 
-    public String deletelibro(int id){
-        libroRepository.eliminar(id);
-        return "producto eliminado";
+    @PutMapping("{id}")
+    public Libro actualizarLibro(@PathVariable int id, @RequestBody Libro libro) {
+        return libroServicio.updateLibro(libro);
+    }
+
+    @DeleteMapping("{id}")
+    public String eliminarLibro(@PathVariable int id) {
+        return libroServicio.deleteLibro(id);
     }
 
 }
