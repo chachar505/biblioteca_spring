@@ -1,83 +1,76 @@
 package com.holamundo.ejemplo.holamundo.repository;
 import com.holamundo.ejemplo.holamundo.model.Libro;
-import org.springframework.stereotype.Repository;
+import com.holamundo.ejemplo.holamundo.repository.LibroRepositorio; // Nombre actualizado
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Service
+public class LibroService {
 
-@Repository
-public class LibroRepository {
+    @Autowired
+    private LibroRepositorio libroRepositorio; // Cambiado a LibroRepositorio
 
-
-    private List<Libro> listaLibro = new ArrayList<>();
-
-
-    public LibroRepository(){
-        listaLibro.add(new Libro(1,  2018, "9789569646638", "Fuego y Sangre",                                    "Penguin Random House Grupo Editorial", "George R. R. Martin"));
-        listaLibro.add(new Libro(2,  2014, "9789563494150", "Quique Hache: El Mall Embrujado y Otras Historias", "Sm Ediciones",                        "Sergio Gomez"));
-        listaLibro.add(new Libro(3,  2020, "9781484256251", "Spring Boot Persistence Best Practices",            "Apress",                              "Anghel Leonard"));
-        listaLibro.add(new Libro(4,  2024, "9789566075752", "Harry Potter y la piedra filosofal",                "Salamandra",                          "J. K. Rowling"));
-        listaLibro.add(new Libro(5,  1999, "9780439139601", "Harry Potter y el prisionero Azkaban",              "Scholastic",                          "J. K. Rowling"));
-        listaLibro.add(new Libro(6,  2000, "9780439136365", "Harry Potter y el cáliz de fuego",                 "Scholastic",                          "J. K. Rowling"));
-        listaLibro.add(new Libro(7,  2008, "9780321127426", "Effective Java",                                    "Addison-Wesley",                      "Joshua Bloch"));
-        listaLibro.add(new Libro(8,  2017, "9780134685991", "Clean Architecture",                               "Prentice Hall",                       "Robert C. Martin"));
-        listaLibro.add(new Libro(9,  1994, "9780201633610", "Design Patterns",                                   "Addison-Wesley",                      "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides"));
-        listaLibro.add(new Libro(10, 2008, "9780132350884", "Clean Code",                                        "Prentice Hall",                       "Robert C. Martin"));
-    }
-    public List<Libro> obtenerLibro(){
-        return listaLibro;
+    public List<Libro> getLibros() {
+        return libroRepositorio.obtenerLibros();
     }
 
-    public Libro buscarPorId(int id){
-        for (Libro libro : listaLibro){
-            if (libro.getId() == id){
-                return libro;
-            }
+    public Libro getLibroId(int id) {
+        return libroRepositorio.buscarPorId(id);
+    }
+
+    public Libro saveLibro(Libro libro) {
+        // Validación: No permitir ISBN duplicado
+        if (libroRepositorio.buscarPorIsbn(libro.getIsbn()) != null) {
+            throw new RuntimeException("El ISBN ya existe.");
         }
-        return null;
+        return libroRepositorio.guardar(libro);
     }
 
-    public Libro buscarPorIsbn(String isbn){
-        for (Libro libro: listaLibro){
-            if (libro.getIsbn().equals(isbn)){
-                return libro;
-            }
-        }
-        return null;
-    }
-    public Libro guardar(Libro libro){
-        int id=0, idPosicion=0;
-
-        listaLibro.add(libro);
-        return libro;
-
+    public Libro updateLibro(Libro libro) {
+        return libroRepositorio.actualizar(libro);
     }
 
-    public Libro actualizar(Libro libro){
-        int id=0, idPosicion=0;
-
-        for (int i=0; i <  listaLibro.size(); i++) {
-            if ((listaLibro.get(i).getId()) == libro.getId()){
-                id = libro.getId();
-                idPosicion = i;
-
-            }
-        }
-
-        Libro libro1 = new Libro();
-        libro1.setId(id);
-        libro1.setTitulo(libro.getTitulo());
-        libro1.setAutor(libro.getAutor());
-        libro1.setFechaPublicacion(libro.getFechaPublicacion());
-
-        return libro1;
+    public String deleteLibro(int id) {
+        libroRepositorio.eliminar(id);
+        return "Libro con ID " + id + " eliminado con éxito.";
     }
 
-    public void eliminar( int id) {
-        Libro libro = buscarPorId(id);
-        if (libro != null) {
-            listaLibro.remove(libro);
-        }
+    public String eliminart(String titulo) {
+        libroRepositorio.eliminart(titulo);
+        return "Libro '" + titulo + "' eliminado.";
+    }
+
+    public int totalLibros() {
+        return libroRepositorio.totalLibros();
+    }
+
+    public Libro getLibroIsbn(String isbn) {
+        return libroRepositorio.buscarPorIsbn(isbn);
+    }
+
+    public Libro getLibroFechaPublicacion(int fecha) {
+        return libroRepositorio.buscarPorFechaPublicacion(fecha);
+    }
+
+    public Libro getLibroTitulo(String titulo) {
+        return libroRepositorio.buscarPorTitulo(titulo);
+    }
+
+    public Libro getLibroAutor(String autor) {
+        return libroRepositorio.buscarPorAutor(autor);
+    }
+
+    public Libro obtenerMasAntiguo() {
+        return libroRepositorio.obtenerMasAntiguo();
+    }
+
+    public Libro obtenerMasNuevo() {
+        return libroRepositorio.obtenerMasNuevo();
+    }
+
+    public List<Libro> listarLibrosOrdenados() {
+        return libroRepositorio.obtenerLibrosOrdenados();
     }
 }
